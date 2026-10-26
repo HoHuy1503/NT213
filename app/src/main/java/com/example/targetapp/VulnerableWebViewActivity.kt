@@ -41,10 +41,25 @@ class VulnerableWebViewActivity : AppCompatActivity() {
 
         // Cầu nối giao tiếp Java-JS
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidBridge")
-        webView.webViewClient = WebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView,
+                request: android.webkit.WebResourceRequest,
+                error: android.webkit.WebResourceError
+            ) {
+                super.onReceivedError(view, request, error)
+                if (request.isForMainFrame) {
+                    Toast.makeText(
+                        this@VulnerableWebViewActivity,
+                        "Không tải được trang: ${error.description}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
 
         // Lỗ hổng: Nhận URL từ Intent mở rộng không lọc domain/scheme
-        val inputUrl = intent.getStringExtra("TARGET_URL") ?: "https://httpbin.org/get"
+        val inputUrl = intent.getStringExtra("TARGET_URL") ?: "https://example.com/"
         webView.loadUrl(inputUrl)
     }
 }

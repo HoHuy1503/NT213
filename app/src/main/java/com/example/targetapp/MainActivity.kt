@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         // 3. Mở Module WebView Lỗ hổng
         btnOpenWebView.setOnClickListener {
             val intent = Intent(this, VulnerableWebViewActivity::class.java)
-            intent.putExtra("TARGET_URL", "https://httpbin.org/get")
+            intent.putExtra("TARGET_URL", "https://example.com/")
             startActivity(intent)
         }
     }
