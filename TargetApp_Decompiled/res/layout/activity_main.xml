@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="20.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:id="@id/btnCheckRoot" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Kiểm tra Root" />
+    <Button android:id="@id/btnTestNetwork" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:text="Thử nghiệm SSL Pinning" />
+    <Button android:id="@id/btnOpenWebView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:text="Mở Module WebView" />
+    <TextView android:textSize="16.0sp" android:textStyle="bold" android:id="@id/tvStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" android:text="Trạng thái: Sẵn sàng" />
+</LinearLayout>

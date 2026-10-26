@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Mặc định chỉ tin tưởng System CA, loại bỏ User CA cài thêm -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Áp dụng SSL Pinning ở tầng Hệ thống cho Domain mục tiêu -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">httpbin.org</domain>
+        <pin-set expiration="2027-01-01">
+            <!-- Mã hash Public Key SHA-256 mẫu -->
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
