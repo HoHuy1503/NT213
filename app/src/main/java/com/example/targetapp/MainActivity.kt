@@ -8,7 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val networkModule = NetworkModule()
+    private val networkModule by lazy {
+        resources.openRawResource(R.raw.lab_server).use {
+            val cert = java.security.cert.CertificateFactory.getInstance("X.509")
+                .generateCertificate(it) as java.security.cert.X509Certificate
+            NetworkModule(cert)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +28,30 @@ class MainActivity : AppCompatActivity() {
         // 1. Kiểm tra Root
         btnCheckRoot.setOnClickListener {
             val isRooted = RootDetection.isDeviceRooted()
-            tvStatus.text = if (isRooted) "Cảnh báo: Thiết bị ĐÃ BỊ ROOT!" else "Thiết bị An toàn (Not Rooted)"
+            tvStatus.text = if (isRooted) "Phát hiện dấu hiệu root" else "Chưa phát hiện dấu hiệu root"
         }
 
         // 2. Kiểm tra SSL Pinning Network
-        btnTestNetwork.setOnClickListener {
-            tvStatus.text = "Đang gởi request kiểm tra SSL Pinning..."
-            networkModule.makePinnedRequest("https://httpbin.org/get") { success, message ->
+        val btnWrongPin = findViewById<Button>(R.id.btnWrongPin)
+        fun runProbe(wrongPin: Boolean) {
+            btnTestNetwork.isEnabled = false
+            btnWrongPin.isEnabled = false
+            val mode = if (wrongPin) "Pin OkHttp sai" else "Pin hợp lệ"
+            tvStatus.text = "$mode · Đang kết nối…"
+            networkModule.makePinnedRequest(wrongPin) { result ->
                 runOnUiThread {
-                    tvStatus.text = if (success) "Kết nối thành công!\n$message" else "Chặn bởi SSL Pinning:\n$message"
+                    if (!isDestroyed && !isFinishing) {
+                        tvStatus.text = "$mode\n$result"
+                        btnTestNetwork.isEnabled = true
+                        btnWrongPin.isEnabled = true
+                    }
                 }
             }
+        }
+        btnTestNetwork.setOnClickListener { runProbe(false) }
+        btnWrongPin.setOnClickListener { runProbe(true) }
+        findViewById<Button>(R.id.btnSafeWebView).setOnClickListener {
+            startActivity(Intent(this, SafeWebViewActivity::class.java))
         }
 
         // 3. Mở Module WebView Lỗ hổng
@@ -43,3 +62,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

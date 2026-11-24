@@ -16,14 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Thử nghiệm SSL Pinning" />
+        android:text="HTTPS · pin hợp lệ" />
 
+    <Button
+        android:id="@+id/btnWrongPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đối chứng · pin OkHttp sai" />
     <Button
         android:id="@+id/btnOpenWebView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Mở Module WebView" />
+        android:text="WebView · bản lab" />
+
+    <Button
+        android:id="@+id/btnSafeWebView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WebView · bản phòng thủ" />
 
     <TextView
         android:id="@+id/tvStatus"
@@ -34,3 +45,4 @@
         android:textStyle="bold"
         android:text="Trạng thái: Sẵn sàng" />
 </LinearLayout>
+

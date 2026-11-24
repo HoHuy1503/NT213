@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/lab/.tls/
+TargetApp_Rebuild/build/
+.idea/vcs.xml

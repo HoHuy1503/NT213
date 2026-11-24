@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SafeWebViewActivity" android:exported="false" />
         <activity android:name=".VulnerableWebViewActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

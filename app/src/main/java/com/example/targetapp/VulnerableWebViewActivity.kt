@@ -43,8 +43,10 @@ class VulnerableWebViewActivity : AppCompatActivity() {
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidBridge")
         webView.webViewClient = WebViewClient()
 
-        // Lỗ hổng: Nhận URL từ Intent mở rộng không lọc domain/scheme
-        val inputUrl = intent.getStringExtra("TARGET_URL") ?: "https://httpbin.org/get"
+        // Lỗ hổng: Nhận URL từ Intent mở rộng hoặc Deep Link không lọc domain/scheme
+        val inputUrl = intent.data?.getQueryParameter("url")
+            ?: intent.getStringExtra("TARGET_URL")
+            ?: "https://httpbin.org/get"
         webView.loadUrl(inputUrl)
     }
 }

@@ -10,3 +10,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+# Preserve method names used by the WebView lab page in optimized builds.
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
